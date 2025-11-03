@@ -1,0 +1,31 @@
+{
+  "name": "aura-next-app",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev -p 3000",
+    "build": "next build",
+    "start": "next start -p 3000",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "next": "^16.0.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "lucide-react": "^0.259.0",
+    
+    "@radix-ui/react-label": "^1.0.0",
+    "@radix-ui/react-select": "^1.1.6",
+    "@radix-ui/react-slot": "^1.0.3",
+    "@radix-ui/react-toast": "^1.0.9",
+    "qrcode": "^1.5.1",
+    "clsx": "^1.2.1",
+    "tailwind-merge": "^1.14.0",
+  "class-variance-authority": "^0.7.1",
+    "date-fns": "^2.30.0"
+  },
+  "devDependencies": {
+    "@types/react": "19.2.2",
+    "typescript": "^5.9.3"
+  }
+}
