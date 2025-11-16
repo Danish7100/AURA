@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Real-Time Date & Time Test</title>
+</head>
+<body>
+    <h1>Current Real-Time Information:</h1>
+    <div id="datetime"></div>
+    
+    <script>
+        function updateTime() {
+            const now = new Date();
+            
+            // Current date and time
+            const currentDateTime = now.toLocaleString();
+            const currentDate = now.toISOString().split('T')[0]; // YYYY-MM-DD
+            const currentDay = now.toLocaleDateString('en-US', { weekday: 'long' });
+            const currentTime = now.toTimeString().split(' ')[0]; // HH:MM:SS
+            
+            document.getElementById('datetime').innerHTML = `
+                <p><strong>Full DateTime:</strong> ${currentDateTime}</p>
+                <p><strong>Date (YYYY-MM-DD):</strong> ${currentDate}</p>
+                <p><strong>Day:</strong> ${currentDay}</p>
+                <p><strong>Time (24h):</strong> ${currentTime}</p>
+                <p><strong>Timestamp:</strong> ${Date.now()}</p>
+            `;
+        }
+        
+        // Update every second
+        setInterval(updateTime, 1000);
+        updateTime(); // Initial call
+    </script>
+</body>
+</html>

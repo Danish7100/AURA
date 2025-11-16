@@ -8,8 +8,11 @@ export type Student = {
 export type Course = {
   id: string;
   name: string;
+  courseCode: string;
+  classId: string;
   day: string;
   time: string;
+  endTime: string;
   roomNo: string;
 };
 

@@ -3,10 +3,10 @@
 import { useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { useAuth } from '@/contexts/AuthContext'
-import { Header } from "@/app/components/header";
-import { StudentDashboard } from "@/app/components/student-dashboard";
+import { Header } from "@/app/components/header"
+import { TeacherDashboard } from "@/app/components/teacher-dashboard"
 
-export default function StudentPage() {
+export default function FacultyPage() {
   const { user, isLoading } = useAuth()
   const router = useRouter()
 
@@ -14,8 +14,8 @@ export default function StudentPage() {
     if (!isLoading) {
       if (!user) {
         router.push('/auth/signin')
-      } else if (user.role !== 'student') {
-        router.push('/faculty')
+      } else if (user.role !== 'faculty') {
+        router.push('/student')
       }
     }
   }, [user, isLoading, router])
@@ -24,7 +24,7 @@ export default function StudentPage() {
     return <div className="flex items-center justify-center min-h-screen">Loading...</div>
   }
 
-  if (!user || user.role !== 'student') {
+  if (!user || user.role !== 'faculty') {
     return null
   }
 
@@ -32,8 +32,8 @@ export default function StudentPage() {
     <div className="flex min-h-screen w-full flex-col bg-background">
       <Header />
       <main className="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-8">
-        <StudentDashboard />
+        <TeacherDashboard />
       </main>
     </div>
-  );
+  )
 }

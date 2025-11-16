@@ -1,11 +1,17 @@
 'use client';
-import { ScanLine } from "lucide-react";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { cn } from "@/lib/utils";
+import { ScanLine, LogOut, User } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { useAuth } from "@/contexts/AuthContext";
+import { Button } from "@/components/ui/button";
 
 export function Header() {
-  const pathname = usePathname();
+  const { user, logout } = useAuth();
+  const router = useRouter();
+
+  const handleLogout = () => {
+    logout();
+    router.replace('/auth/signin');
+  };
 
   return (
     <header className="sticky top-0 z-10 flex h-16 items-center gap-4 border-b bg-background px-4 md:px-6">
@@ -16,14 +22,19 @@ export function Header() {
               QRCode Attendance
             </h1>
         </div>
-        <div className="flex items-center gap-4">
-            <Link href="/" className={cn("text-muted-foreground transition-colors hover:text-foreground", pathname === "/" && "text-primary font-semibold")}>
-                Teacher
-            </Link>
-            <Link href="/student" className={cn("text-muted-foreground transition-colors hover:text-foreground", pathname === "/student" && "text-primary font-semibold")}>
-                Student
-            </Link>
-        </div>
+        {user && (
+          <div className="flex items-center gap-4">
+            <div className="flex items-center gap-2 text-sm">
+              <User className="h-4 w-4" />
+              <span className="font-medium">{user.name}</span>
+              <span className="text-muted-foreground">({user.role})</span>
+            </div>
+            <Button variant="outline" size="sm" onClick={handleLogout}>
+              <LogOut className="h-4 w-4 mr-2" />
+              Logout
+            </Button>
+          </div>
+        )}
       </nav>
     </header>
   );
