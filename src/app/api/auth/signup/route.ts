@@ -25,7 +25,7 @@ export async function POST(request: NextRequest) {
 
     const hashedPassword = await bcrypt.hash(password, 12)
     
-    const userData = {
+    const userData: any = {
       email,
       password: hashedPassword,
       name,

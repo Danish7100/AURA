@@ -1,10 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  reactStrictMode: true,
-  // Allow access from network devices for mobile testing
-  experimental: {
-    allowedDevOrigins: ['*']
-  }
+  reactStrictMode: true
 };
 
 export default nextConfig;

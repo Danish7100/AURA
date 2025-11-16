@@ -6,7 +6,8 @@ export type Student = {
 };
 
 export type Course = {
-  id: string;
+  id?: string;
+  _id?: string;
   name: string;
   courseCode: string;
   classId: string;
@@ -14,6 +15,7 @@ export type Course = {
   time: string;
   endTime: string;
   roomNo: string;
+  studentList?: Array<{ studentId: string; studentName: string }>;
 };
 
 export type Session = {

@@ -24,7 +24,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Invalid credentials' }, { status: 401 })
     }
 
-    const userData = { 
+    const userData: any = { 
       id: user._id, 
       email: user.email, 
       name: user.name, 

@@ -43,10 +43,10 @@ export function TeacherDashboard() {
   const [showAddForm, setShowAddForm] = useState(false);
   const [selectedDay, setSelectedDay] = useState("");
   const [isClient, setIsClient] = useState(false);
-  const [allAttendanceRecords, setAllAttendanceRecords] = useState([]);
-  const [selectedClassForView, setSelectedClassForView] = useState(null);
+  const [allAttendanceRecords, setAllAttendanceRecords] = useState<any[]>([]);
+  const [selectedClassForView, setSelectedClassForView] = useState<string | null>(null);
   const [showAttendanceList, setShowAttendanceList] = useState(false);
-  const [currentCourseStudents, setCurrentCourseStudents] = useState([]);
+  const [currentCourseStudents, setCurrentCourseStudents] = useState<any[]>([]);
 
   const [day, setDay] = useState("");
   const [time, setTime] = useState("");
@@ -55,7 +55,7 @@ export function TeacherDashboard() {
   const [courseCode, setCourseCode] = useState("");
   const [classId, setClassId] = useState("");
   const [roomNo, setRoomNo] = useState("");
-  const [studentList, setStudentList] = useState([]);
+  const [studentList, setStudentList] = useState<Array<{ studentId: string; studentName: string }>>([]);
   const [sessionAttendance, setSessionAttendance] = useState<AttendanceRecord[]>([]);
 
   useEffect(() => {
@@ -177,12 +177,13 @@ export function TeacherDashboard() {
     }
   };
 
-  const handleFileUpload = (event) => {
-    const file = event.target.files[0];
+  const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
     if (file && file.type === 'text/csv') {
       const reader = new FileReader();
       reader.onload = (e) => {
-        const csv = e.target.result;
+        const csv = e.target?.result as string;
+        if (!csv) return;
         const lines = csv.split('\n');
         const students = [];
         
@@ -264,10 +265,10 @@ export function TeacherDashboard() {
     }
   };
 
-  const downloadCSV = (classData, classId) => {
+  const downloadCSV = (classData: any[], classId: string) => {
     const csvContent = [
       ['Date', 'Student Name', 'Enrollment Number', 'Subject', 'Time'],
-      ...classData.map(record => [
+      ...classData.map((record: any) => [
         record.date,
         record.studentName,
         record.studentId,
@@ -285,7 +286,7 @@ export function TeacherDashboard() {
     window.URL.revokeObjectURL(url);
   };
 
-  const downloadPDF = (classData, classId) => {
+  const downloadPDF = (classData: any[], classId: string) => {
     const printContent = `
       <html>
         <head><title>Attendance Report - ${classId}</title></head>
@@ -293,7 +294,7 @@ export function TeacherDashboard() {
           <h1>Attendance Report - Class ${classId}</h1>
           <table border="1" style="border-collapse: collapse; width: 100%;">
             <tr><th>Date</th><th>Student Name</th><th>Enrollment Number</th><th>Subject</th><th>Time</th></tr>
-            ${classData.map(record => `
+            ${classData.map((record: any) => `
               <tr>
                 <td>${record.date}</td>
                 <td>${record.studentName}</td>
@@ -308,9 +309,11 @@ export function TeacherDashboard() {
     `;
     
     const printWindow = window.open('', '_blank');
-    printWindow.document.write(printContent);
-    printWindow.document.close();
-    printWindow.print();
+    if (printWindow) {
+      printWindow.document.write(printContent);
+      printWindow.document.close();
+      printWindow.print();
+    }
   };
 
 
@@ -325,7 +328,8 @@ export function TeacherDashboard() {
         const startTime = new Date();
         setSelectedCourse(course);
         
-        const sessionId = `session_${course._id}_${Date.now()}`;
+        const courseId = course._id || course.id || '';
+        const sessionId = `session_${courseId}_${Date.now()}`;
         const teacherId = user?.teacherId || 'unknown';
         
         const currentDate = startTime.toISOString().split('T')[0]; // YYYY-MM-DD format
@@ -333,7 +337,7 @@ export function TeacherDashboard() {
         
         const qrCodeData = {
           sessionId: sessionIdWithDate,
-          courseId: course._id,
+          courseId: courseId,
           teacherId: teacherId,
           courseCode: course.courseCode,
           classId: course.classId,
@@ -344,7 +348,7 @@ export function TeacherDashboard() {
         
         const sessionData: Session = {
             id: sessionIdWithDate,
-            courseId: course._id,
+            courseId: courseId,
             teacherId: teacherId,
             startTime: startTime,
             qrCode: qrCodeValue,
@@ -587,7 +591,7 @@ export function TeacherDashboard() {
                               variant="ghost"
                               size="sm"
                               className="text-red-500 hover:text-red-700 hover:bg-red-50"
-                              onClick={() => handleDeleteCourse(course._id)}
+                              onClick={() => handleDeleteCourse(course._id || course.id || '')}
                             >
                               <Trash2 className="h-4 w-4" />
                             </Button>
