@@ -16,7 +16,7 @@ export default function Home() {
             <h1 className="text-5xl font-bold text-gray-900">AURA</h1>
           </div>
           <h2 className="text-3xl font-semibold text-gray-800 mb-4">
-            QR Code Attendance System
+            Automated University Rollcalls Analytics
           </h2>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto">
             Modern, efficient, and secure attendance management using QR code technology. 
@@ -114,7 +114,7 @@ export default function Home() {
 
         {/* Footer */}
         <div className="text-center mt-16 text-gray-600">
-          <p>© 2024 AURA - QR Code Attendance System. All rights reserved.</p>
+          <p>© 2025 AURA - QR Code Attendance System. All rights reserved.</p>
         </div>
       </div>
     </div>
