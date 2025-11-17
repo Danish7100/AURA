@@ -114,7 +114,7 @@ export default function Home() {
 
         {/* Footer */}
         <div className="text-center mt-16 text-gray-600">
-          <p>© 2025 AURA - QR Code Attendance System. All rights reserved.</p>
+          <p>© 2025 AURA - Automated University Rollcalls Analytics. All rights reserved.</p>
         </div>
       </div>
     </div>
